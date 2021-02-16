@@ -1,0 +1,102 @@
+#!/usr/bin/env python
+'''
+Copyright (c) 2020, 2021 Zhenjia Wang <zhenjia@virginia.edu>, Chongzhi Zang <zang@virginia.edu>
+
+This code is free software; you can redistribute it and/or modify it 
+under the terms of the BSD License.
+
+@status: release candidate
+@version: v1.1
+@author: Zhenjia Wang, Chongzhi Zang
+@contact: zhenjia@virginia.edu, zang@virginia.edu
+'''
+
+
+import os,sys,argparse
+import configparser
+
+try:
+    import bart3d
+except:
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    sys.path.append(os.path.join(script_dir, os.pardir))
+    import bart3d
+
+from bart3d.main import run_bart3d
+bart3d_version = bart3d.__version__
+
+
+
+def prepare_argparser():
+    """
+    Prepare optparser object.
+    """    
+    description = '''%(prog)s -- Inferring transcriptional regulators from differential Hi-C data. \n
+'''    
+    argparser = argparse.ArgumentParser(description = description)
+    argparser.add_argument("-v","--version", action="version", version="%(prog)s\t"+bart3d_version)
+
+    # group for input files
+    group_input = argparser.add_argument_group( "Input files arguments" )
+    group_input.add_argument('-t', '--treatment', type = str, dest = 'treatment', required = True, 
+            help = 'Treatment contact matrix file. The input file could be .matrix file from HiC-Pro, .hic file from Jurcer, or .cool file.\
+                    Multiple samples can be provided as comma separated list (no spaces around commas, e.g., -t A,B,C).')
+    group_input.add_argument('-c', '--control', type = str, dest = 'control', required = True, 
+            help = 'Control contact matrix file. Must be in the same format/resolution as the treatment matrix.\
+                    Multiple samples can be provided as comma separated list (no spaces around commas, e.g., -c A,B,C).')
+
+    group_input.add_argument('-f', '--fileFormat', type = str, dest = 'fileFormat', choices=['hicpro','hic','cool'], required = True,  
+            help = 'Format of the input matrix files. The following options are available: "hicpro", "hic" or "cool". If use "hicpro", additional abs/ord .bed file need to be provided through --bedFileHicpro.')
+    group_input.add_argument('-s','--species', type=str, dest='species',choices = ['hg38','mm10'], required = True, 
+            help = 'Species, please choose from "hg38" or "mm10".')
+    group_input.add_argument('--genomicDistance', type = int,dest = 'genomicDistance',  required = False, 
+    		help = 'Genomic flanking regions for detecting differential chromatin interactions. Default: 200000 (in bp).', default=200000)
+    
+    group_input.add_argument('--bedFileHicpro', type = str, dest = 'bedFileHicpro', required = False, 
+            help = 'For .hicpro format, please provide the abs/ord .bed file from HiC-Pro. NOTES: for one species and one resolution, the HiC-Pro output abs/ord .bed files are identical.')
+    group_input.add_argument('--resolution', type=int, dest='resolution', required = False, default=5000,
+            help = 'For .hic format, please specify a resolution. Default: 5000 (in bp).')
+#     group_input.add_argument('--nonorm',dest='nonorm', action = 'store_true',  default = False, 
+#                         help = 'Whether or not do the standardization for each TF by all of its Wilcoxon statistic scores in our compendium. If set, BART3D will not do the normalization. Default: FALSE.')
+    group_input.add_argument('--coverageNormalization',dest='coverageNormalization', action = 'store_true',  default = False, 
+                        help = 'Whether to normalize the DCI profile by the coverage changes of Hi-C data. Default: FALSE.')
+
+        
+    # group for output files
+    group_output = argparser.add_argument_group( "Output arguments" )
+    group_output.add_argument("--outdir", dest = "outdir", type = str,
+                        help = "If specified, all output files will be written to that directory. Default: bart3d_output under the current working directory")
+    group_output.add_argument( "--outFileName", dest = "outFileName", type = str,
+                               help = "Name string of the output files. Default: joint basename of the first treatment/control files." )
+
+
+    return argparser
+    
+
+
+
+def main():
+    """
+    The main function/pipeline for bart3d
+    """
+    # Parse options
+    argparser = prepare_argparser()
+    args = argparser.parse_args()
+    
+    # either with -h/-v or sub-command
+    if len(sys.argv)<2: 
+        argparser.print_help()
+        exit(1)  
+
+    sys.stdout.write('\nbart3d -- Inferring transcriptional regulators from differential Hi-C data.\n\n')
+    run_bart3d(args)
+
+
+
+
+if __name__=='__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.stderr.write('User interrupted me! :) Bye~\n')
+        sys.exit(0)

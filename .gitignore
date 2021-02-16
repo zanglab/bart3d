@@ -1,0 +1,5 @@
+*.pyc
+.AppleDouble
+cl.log
+.DS_Store
+
