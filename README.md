@@ -89,19 +89,19 @@ tar zxf bart3d_test_data.tar.gz
 
 - For hicpro input
 ```shell
-wget https://www.dropbox.com/s/wfrjwm5pq2k6qo3/bart3d_test_data_hicpro_input.tar.gz?dl=0 -O bart3d_test_data_hicpro_input.tar.gz
+wget https://virginia.box.com/shared/static/wx4k9pmm3dsotzndj3jh9by7lgw9v5x9.gz -O bart3d_test_data_hicpro_input.tar.gz
 tar zxf bart3d_test_data_hicpro_input.tar.gz
 ```
 
 - For .hic input
 ```shell
-wget https://www.dropbox.com/s/727gtfih44zcrxy/bart3d_test_data_juicer_input.tar.gz?dl=0 -O bart3d_test_data_juicer_input.tar.gz
+wget https://virginia.box.com/shared/static/8l1kuicf411bbi4g8296dwnhtef7dt6t.gz -O bart3d_test_data_juicer_input.tar.gz
 tar zxf bart3d_test_data_juicer_input.tar.gz
 ```
 
 - For .cool input
 ```shell
-wget https://www.dropbox.com/s/gvtwug9qp52sps8/bart3d_test_data_cool_input.tar.gz?dl=0 -O bart3d_test_data_cool_input.tar.gz
+wget https://virginia.box.com/shared/static/lmsohsiybchi2kgtddhho319fzvrbxyx.gz -O bart3d_test_data_cool_input.tar.gz
 tar zxf bart3d_test_data_cool_input.tar.gz
 ```
 
