@@ -30,9 +30,9 @@ BART3D uses Python's distutils tools for source installation. Before installing 
 You have to download the Human or Mouse Data Library under your own directory before install BART3D. The unpacked libraries occupy 14GB hard drive storage in the download directory. 
 
 ```shell
-wget https://faculty.virginia.edu/zanglab/bart/hg38_library.tar.gz
+wget https://virginia.box.com/shared/static/byufe8n6ft47hs4q7l6xxhyqnifjohm8.gz -O hg38_library.tar.gz
 tar zxf hg38_library.tar.gz
-wget https://faculty.virginia.edu/zanglab/bart/mm10_library.tar.gz
+wget https://virginia.box.com/shared/static/bxli2cc6zfj7h1llt9vx9km9u0d4vwhc.gz -O mm10_library.tar.gz
 tar zxf mm10_library.tar.gz
 ```
 
