@@ -59,11 +59,11 @@ def differential_score(args):
             
         elif args.fileFormat=='hic':
             print('== Reading treatment contact matrix: {}'.format(treat_i+1))
-            treat_interaction_dfs,treat_resolution = local_interaction_from_hic.get_local_interaction_from_matrix(args.treatment,args.resolution,tmpdir,chrom_len,genomic_distance)
+            treat_interaction_dfs,treat_resolution = local_interaction_from_hic.get_local_interaction_from_matrix(treat_matrix_file,args.resolution,tmpdir,chrom_len,genomic_distance)
         
         elif args.fileFormat=='cool':
             print('== Reading treatment contact matrix: {}'.format(treat_i+1))
-            treat_interaction_dfs,treat_resolution = local_interaction_from_cool.get_local_interaction_from_matrix(args.treatment,tmpdir,chrom_len,genomic_distance)
+            treat_interaction_dfs,treat_resolution = local_interaction_from_cool.get_local_interaction_from_matrix(treat_matrix_file,tmpdir,chrom_len,genomic_distance)
         
         # save the treatment contact matrix
         treat_matrix_data[treat_i] = treat_interaction_dfs
@@ -81,11 +81,11 @@ def differential_score(args):
             
         elif args.fileFormat=='hic':
             print('== Reading control contact matrix: {}'.format(control_j+1))
-            control_interaction_dfs,control_resolution = local_interaction_from_hic.get_local_interaction_from_matrix(args.control,args.resolution,tmpdir,chrom_len,genomic_distance)
+            control_interaction_dfs,control_resolution = local_interaction_from_hic.get_local_interaction_from_matrix(control_matrix_file,args.resolution,tmpdir,chrom_len,genomic_distance)
         
         elif args.fileFormat=='cool':
             print('== Reading control contact matrix: {}'.format(control_j+1))
-            control_interaction_dfs,control_resolution = local_interaction_from_cool.get_local_interaction_from_matrix(args.control,tmpdir,chrom_len,genomic_distance)
+            control_interaction_dfs,control_resolution = local_interaction_from_cool.get_local_interaction_from_matrix(control_matrix_file,tmpdir,chrom_len,genomic_distance)
         
         # save the control contact matrix
         control_matrix_data[control_j] = control_interaction_dfs    
